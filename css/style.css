@@ -1,0 +1,112 @@
+/* Editorial Minimalism Custom Styles & Overrides */
+
+/* Smooth theme transitions */
+body {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Material Symbols font configuration */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 1;
+}
+
+/* Skip link for keyboard accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000000;
+  color: #ffffff;
+  padding: 8px 16px;
+  z-index: 100;
+  transition: top 0.2s ease;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* Focus styles for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #64748B;
+  outline-offset: 2px;
+}
+
+/* Chat Panel Transitions */
+.chat-panel {
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px) scale(0.96);
+}
+.chat-panel.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+/* AI Intro Speech Bubble Popup */
+.ai-intro-popup {
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+.ai-intro-popup.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.ai-intro-popup.dismissed {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  display: none;
+}
+
+/* Project Modal Transitions */
+.modal-wrapper {
+  transition: opacity 0.25s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.modal-wrapper.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content-card {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  transform: scale(0.95) translateY(12px);
+  opacity: 0;
+}
+.modal-wrapper.active .modal-content-card {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Custom Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c4c7c7;
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #444748;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #747878;
+}
