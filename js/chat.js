@@ -46,15 +46,6 @@ class ChatManager {
       this.closeBtn.addEventListener('click', () => this.closeChat());
     }
 
-    const tryAssistantBtn = document.getElementById('try-assistant-cta');
-    if (tryAssistantBtn) {
-      tryAssistantBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.dismissIntroPopup(true);
-        this.openChat();
-      });
-    }
-
     if (this.inputField && this.sendBtn) {
       this.sendBtn.addEventListener('click', () => this.handleSendMessage());
 

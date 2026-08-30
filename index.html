@@ -159,6 +159,8 @@
         <a class="desktop-nav-link text-on-surface-variant dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors font-label-sm text-label-sm uppercase tracking-widest"
           href="#skills">Skills</a>
         <a class="desktop-nav-link text-on-surface-variant dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors font-label-sm text-label-sm uppercase tracking-widest"
+          href="#achievements">Achievements</a>
+        <a class="desktop-nav-link text-on-surface-variant dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors font-label-sm text-label-sm uppercase tracking-widest"
           href="#contact">Contact</a>
       </nav>
 
@@ -211,6 +213,8 @@
         <a class="text-on-surface-variant dark:text-gray-300 font-label-sm text-sm uppercase tracking-widest hover:text-primary dark:hover:text-white"
           href="#skills">Skills</a>
         <a class="text-on-surface-variant dark:text-gray-300 font-label-sm text-sm uppercase tracking-widest hover:text-primary dark:hover:text-white"
+          href="#achievements">Achievements</a>
+        <a class="text-on-surface-variant dark:text-gray-300 font-label-sm text-sm uppercase tracking-widest hover:text-primary dark:hover:text-white"
           href="#contact">Contact</a>
       </nav>
     </div>
@@ -240,8 +244,7 @@
           <div
             class="relative w-full aspect-[3/4] bg-surface-container dark:bg-neutral-800 overflow-hidden rounded border border-border-muted dark:border-neutral-700 shadow-sm">
             <img alt="Portrait of Shazamal Saif, AI Backend Engineer"
-              class="w-full h-full object-cover object-top transition-all duration-700 hover:scale-105"
-              src="assets/images/saif-portrait.jpg" loading="eager">
+              class="w-full h-full object-cover object-top transition-all duration-700 hover:scale-105"src="assets/images/Profile.png" loading="eager">
           </div>
         </div>
 
@@ -335,7 +338,7 @@
                 <div class="flex-grow">
                   <span class="font-bold text-primary dark:text-white block text-base leading-snug">Southeast
                     University</span>
-                  <span class="text-blue-600 dark:text-blue-400 font-semibold font-body-md block mt-0.5">BSc. in
+                  <span class="text-blue-600 dark:text-blue-400 font-semibold font-body-md block mt-0.5">BSC. in
                     Computer Science and Engineering</span>
                 </div>
               </div>
@@ -684,7 +687,7 @@
       </div>
     </section>
 
-    <!-- Try Something CTA Section -->
+  <!-- Try Something CTA Section -->
     <section class="w-full px-gutter max-w-container-max mx-auto mb-section-gap">
       <div
         class="bg-surface-container-low dark:bg-neutral-900 border border-border-muted dark:border-neutral-800 p-12 md:p-24 text-center rounded flex flex-col items-center">
@@ -693,12 +696,55 @@
           Interact with the conversational AI assistant to explore my technical capabilities, project architectures, and
           engineering philosophies.
         </p>
-        <button id="try-assistant-cta"
+        <a id="try-assistant-cta" href="https://hacakthon-liard.vercel.app/" target="_blank" rel="noopener noreferrer"
           class="inline-flex items-center bg-primary dark:bg-white text-on-primary dark:text-black px-8 py-4 font-label-sm text-label-sm uppercase tracking-widest hover:opacity-90 transition-opacity active:scale-95 rounded font-bold">
           Try My AI Assistant <span class="material-symbols-outlined ml-2 text-[16px]">arrow_forward</span>
-        </button>
+        </a>
       </div>
     </section>
+ 
+  <!-- Achievement-->
+<section class="w-full px-gutter max-w-container-max mx-auto mb-section-gap" id="achievements">
+  <div class="mb-12">
+    <p class="font-label-sm text-label-sm uppercase tracking-widest text-[#3157FF] dark:text-[#6C83FF] mb-4">ACHIEVEMENTS</p>
+    <h2 class="font-headline-lg text-headline-lg text-primary dark:text-primary-fixed mb-4">Things I've Built &amp; Solved</h2>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">A snapshot of my hands-on experience, problem-solving practice, and participation in competitive development challenges.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+
+    <!-- Card 1: Hackathon -->
+    <div class="group p-8 border border-border-muted dark:border-outline-variant rounded bg-surface-container-lowest dark:bg-surface-dark hover:-translate-y-1 hover:shadow-xl transition-all flex flex-col h-full">
+      <div class="mb-6 overflow-hidden rounded border border-border-muted dark:border-outline-variant bg-white">
+        <img src="assets/images/766890123_1115941814718610_4648212879028266411_n.jpg" alt="Hackathon Logo" class="w-full h-24 object-contain p-2">
+      </div>
+      <h3 class="font-body-md text-body-md font-bold text-primary dark:text-primary-fixed mb-4">Mini Hackathon</h3>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-8 flex-grow">Participated in a mini hackathon, gaining hands-on experience in building and presenting a project within a limited timeframe.</p>
+      
+    </div>
+
+    <!-- Card 2: Codeforces -->
+    <div class="group p-8 border border-border-muted dark:border-outline-variant rounded bg-surface-container-lowest dark:bg-surface-dark hover:-translate-y-1 hover:shadow-xl transition-all flex flex-col h-full">
+      <div class="mb-4 w-16 h-16 flex items-center justify-center bg-white rounded p-1 border border-border-muted">
+        <img src="assets/images/Screenshot 2026-08-29 160201.png" alt="Codeforces Logo" class="w-full h-full object-contain">
+      </div>
+      <div class="text-[48px] font-bold text-[#3157FF] dark:text-[#6C83FF] mb-2 leading-none">30+</div>
+      <h3 class="font-label-sm text-label-sm uppercase tracking-widest text-primary dark:text-primary-fixed mb-4">Problems Solved on Codeforces</h3>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-8 flex-grow">Consistent competitive-programming practice focused on problem solving, algorithms, and logical thinking.</p>
+      </div>
+
+    <!-- Card 3: LeetCode (no View Profile button) -->
+    <div class="group p-8 border border-border-muted dark:border-outline-variant rounded bg-surface-container-lowest dark:bg-surface-dark hover:-translate-y-1 hover:shadow-xl transition-all flex flex-col h-full">
+      <div class="mb-4 w-12 h-12 flex items-center justify-center bg-white rounded p-1 border border-border-muted">
+        <img src="assets/images/LeetCode_Sharing.png" alt="LeetCode Logo" class="w-full h-full object-contain">
+      </div>
+      <div class="text-[48px] font-bold text-[#3157FF] dark:text-[#6C83FF] mb-2 leading-none">25+</div>
+      <h3 class="font-label-sm text-label-sm uppercase tracking-widest text-primary dark:text-primary-fixed mb-4">Problems Solved on LeetCode</h3>
+      <p class="font-body-md text-body-md text-on-surface-variant flex-grow">Regular practice with data structures, algorithms, and coding problems through LeetCode.</p>
+    </div>
+
+  </div>
+</section>
+
 
     <!-- Contact Section -->
     <section class="w-full px-gutter max-w-container-max mx-auto mb-section-gap" id="contact">
@@ -972,15 +1018,15 @@
   </div>
 
   <!-- Modular Scripts -->
-  <script src="js/config.js"></script>
-  <script src="js/audio.js"></script>
-  <script src="js/theme.js"></script>
-  <script src="js/navigation.js"></script>
-  <script src="js/projects.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/chat.js"></script>
-  <script src="js/contact.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/config.js?v=1.1"></script>
+  <script src="js/audio.js?v=1.1"></script>
+  <script src="js/theme.js?v=1.1"></script>
+  <script src="js/navigation.js?v=1.1"></script>
+  <script src="js/projects.js?v=1.1"></script>
+  <script src="js/api.js?v=1.1"></script>
+  <script src="js/chat.js?v=1.1"></script>
+  <script src="js/contact.js?v=1.1"></script>
+  <script src="js/main.js?v=1.1"></script>
 </body>
 
 </html>
