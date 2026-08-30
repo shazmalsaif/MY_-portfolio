@@ -2,6 +2,12 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://shazamal-saif-portfolio-backend.vercel.app/api/:match*"
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",

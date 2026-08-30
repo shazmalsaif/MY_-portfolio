@@ -7,7 +7,7 @@ const CONFIG = {
   API_BASE_URL: (window.APP_CONFIG && window.APP_CONFIG.API_BASE_URL) ||
                 (window.__ENV__ && window.__ENV__.VITE_API_URL) ||
                 (typeof process !== 'undefined' && process.env && process.env.VITE_API_URL) ||
-                '',
+                'https://shazamal-saif-portfolio-backend.vercel.app',
 
   // API Endpoints
   ENDPOINTS: {
