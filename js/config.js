@@ -3,13 +3,17 @@
  * Environment-variable ready for Vercel / backend deployment
  */
 const CONFIG = {
-  // Base URL for backend API (can be overridden by window.__ENV__ or left relative for Vercel serverless / proxy)
-  API_BASE_URL: window.APP_CONFIG?.API_BASE_URL || '',
-  
+  // Base URL for backend API (can be configured via window.APP_CONFIG, window.__ENV__, or left blank for same-origin proxy)
+  API_BASE_URL: (window.APP_CONFIG && window.APP_CONFIG.API_BASE_URL) ||
+                (window.__ENV__ && window.__ENV__.VITE_API_URL) ||
+                (typeof process !== 'undefined' && process.env && process.env.VITE_API_URL) ||
+                '',
+
   // API Endpoints
   ENDPOINTS: {
     CHAT: '/api/chat',
     CONTACT: '/api/contact',
+    HEALTH: '/api/health',
   },
 
   // Author Information

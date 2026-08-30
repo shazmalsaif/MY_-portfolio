@@ -1,10 +1,12 @@
 /**
  * API Service Abstraction
- * Handles communication with the AI Backend & Form Endpoints
+ * Handles communication with the FastAPI Backend & AI Endpoints
  */
 class ApiService {
   constructor() {
-    this.baseUrl = (window.CONFIG && window.CONFIG.API_BASE_URL) || '';
+    this.getBaseUrl = () => {
+      return (window.CONFIG && window.CONFIG.API_BASE_URL) ? window.CONFIG.API_BASE_URL.replace(/\/+$/, '') : '';
+    };
   }
 
   /**
@@ -13,7 +15,6 @@ class ApiService {
   getThreadId() {
     let threadId = localStorage.getItem('ai_thread_id');
     if (!threadId) {
-      // Generate standard RFC4122 v4 UUID or timestamp random hash
       threadId = 'session_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 9);
       localStorage.setItem('ai_thread_id', threadId);
     }
@@ -27,8 +28,8 @@ class ApiService {
    */
   async sendChatMessage(message) {
     const threadId = this.getThreadId();
-    const endpoint = (CONFIG.ENDPOINTS && CONFIG.ENDPOINTS.CHAT) || '/api/chat';
-    const url = `${this.baseUrl}${endpoint}`;
+    const endpoint = (window.CONFIG && window.CONFIG.ENDPOINTS && window.CONFIG.ENDPOINTS.CHAT) || '/api/chat';
+    const url = `${this.getBaseUrl()}${endpoint}`;
 
     try {
       const response = await fetch(url, {
@@ -50,19 +51,19 @@ class ApiService {
       const data = await response.json();
       return data;
     } catch (error) {
-      console.warn('API Service communication note:', error.message);
-      // Return structured response indicating API connectivity state
+      console.warn('Chat API error:', error.message);
       throw error;
     }
   }
 
   /**
-   * Submit contact inquiry to the backend endpoint
-   * @param {{name: string, email: string, message: string}} payload
+   * Submit contact inquiry to the FastAPI backend endpoint
+   * @param {{name: string, email: string, subject: string, message: string, _hp?: string}} payload
+   * @returns {Promise<{success: boolean, message: string}>}
    */
   async submitContact(payload) {
-    const endpoint = (CONFIG.ENDPOINTS && CONFIG.ENDPOINTS.CONTACT) || '/api/contact';
-    const url = `${this.baseUrl}${endpoint}`;
+    const endpoint = (window.CONFIG && window.CONFIG.ENDPOINTS && window.CONFIG.ENDPOINTS.CONTACT) || '/api/contact';
+    const url = `${this.getBaseUrl()}${endpoint}`;
 
     try {
       const response = await fetch(url, {
@@ -74,12 +75,24 @@ class ApiService {
         body: JSON.stringify(payload)
       });
 
-      if (!response.ok) {
-        throw new Error(`Server responded with status ${response.status}`);
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonErr) {
+        data = null;
       }
 
-      return await response.json();
+      if (!response.ok) {
+        const errorMsg = (data && data.message) || (data && data.detail) || `Request failed with status ${response.status}`;
+        const error = new Error(typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg));
+        error.status = response.status;
+        error.data = data;
+        throw error;
+      }
+
+      return data || { success: true, message: 'Message sent successfully.' };
     } catch (error) {
+      console.error('Contact submission error:', error);
       throw error;
     }
   }
