@@ -1,8 +1,26 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
+  <!-- Early Theme Detection (Prevents theme flash before styles render) -->
+  <script>
+    (function () {
+      try {
+        var isExplicit = localStorage.getItem('theme_user_set') === 'true';
+        var saved = isExplicit ? localStorage.getItem('theme') : null;
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var isDark = (saved === 'dark') || (!saved && prefersDark);
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        } else {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Shazamal Saif — AI Backend Engineer</title>
   <meta name="description"

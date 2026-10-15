@@ -6,7 +6,8 @@
 
 /* Dark Theme (Default) */
 .intro-overlay,
-.intro-overlay.theme-dark {
+.intro-overlay.theme-dark,
+html.dark .intro-overlay:not(.theme-light) {
   --intro-bg: #050505;
   --intro-surface: #0a0a0a;
   --intro-text-primary: #F5F5F5;
@@ -32,7 +33,8 @@
 }
 
 /* Light Theme */
-.intro-overlay.theme-light {
+.intro-overlay.theme-light,
+html.light .intro-overlay:not(.theme-dark) {
   --intro-bg: #FAFAFA;
   --intro-surface: #FFFFFF;
   --intro-text-primary: #111111;

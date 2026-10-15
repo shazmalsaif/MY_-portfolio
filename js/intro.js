@@ -40,8 +40,8 @@
       this.animFrameId = null;
       this.timeouts = [];
 
-      this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      this.mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)');
+      this.prefersReducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+      this.mediaQueryDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
       this.init();
     }
@@ -74,7 +74,7 @@
 
     /**
      * Determine and apply theme based on:
-     * 1. Explicit theme selected by visitor in portfolio (localStorage / html class)
+     * 1. Explicit theme selected by visitor in portfolio (theme_user_set === 'true')
      * 2. Browser/system preference: window.matchMedia('(prefers-color-scheme: dark)')
      */
     setupTheme() {
@@ -85,18 +85,23 @@
 
       applyCurrentTheme();
 
-      // Listen for system preference changes if no manual override is active
+      // Listen for system preference changes if no explicit manual override is active
       this.themeListener = (e) => {
-        const savedTheme = localStorage.getItem('theme');
-        if (!savedTheme) {
+        const isExplicit = localStorage.getItem('theme_user_set') === 'true';
+        if (!isExplicit) {
           this.applyTheme(e.matches ? 'dark' : 'light');
         }
       };
-      if (this.mediaQueryDark.addEventListener) {
-        this.mediaQueryDark.addEventListener('change', this.themeListener);
+
+      if (this.mediaQueryDark) {
+        if (this.mediaQueryDark.addEventListener) {
+          this.mediaQueryDark.addEventListener('change', this.themeListener);
+        } else if (this.mediaQueryDark.addListener) {
+          this.mediaQueryDark.addListener(this.themeListener);
+        }
       }
 
-      // Observe <html> class changes in case user toggles theme
+      // Observe <html> class changes in case user toggles theme via portfolio controls
       this.themeObserver = new MutationObserver(() => {
         applyCurrentTheme();
       });
@@ -107,13 +112,27 @@
     }
 
     getEffectiveTheme() {
-      const savedTheme = localStorage.getItem('theme');
+      // Priority 1: An explicitly selected theme in the existing portfolio
+      const isExplicit = localStorage.getItem('theme_user_set') === 'true';
+      const savedTheme = isExplicit ? localStorage.getItem('theme') : null;
       if (savedTheme === 'dark' || savedTheme === 'light') {
         return savedTheme;
       }
-      if (document.documentElement.classList.contains('dark')) return 'dark';
-      if (document.documentElement.classList.contains('light')) return 'light';
-      return this.mediaQueryDark.matches ? 'dark' : 'light';
+
+      // Priority 2: Native OS / browser color-scheme preference
+      if (this.mediaQueryDark && typeof this.mediaQueryDark.matches === 'boolean') {
+        return this.mediaQueryDark.matches ? 'dark' : 'light';
+      }
+
+      if (window.matchMedia) {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        if (typeof mq.matches === 'boolean') {
+          return mq.matches ? 'dark' : 'light';
+        }
+      }
+
+      // Do not default to light mode when theme detection is unavailable
+      return 'dark';
     }
 
     applyTheme(theme) {
@@ -331,17 +350,23 @@
       // Clean up event listeners
       if (this.keyHandler) {
         window.removeEventListener('keydown', this.keyHandler);
+        this.keyHandler = null;
       }
       if (this.clickHandler && this.overlay) {
         this.overlay.removeEventListener('click', this.clickHandler);
+        this.clickHandler = null;
       }
       if (this.mediaQueryDark && this.themeListener) {
         if (this.mediaQueryDark.removeEventListener) {
           this.mediaQueryDark.removeEventListener('change', this.themeListener);
+        } else if (this.mediaQueryDark.removeListener) {
+          this.mediaQueryDark.removeListener(this.themeListener);
         }
+        this.themeListener = null;
       }
       if (this.themeObserver) {
         this.themeObserver.disconnect();
+        this.themeObserver = null;
       }
 
       // Restore normal page scrolling
@@ -366,12 +391,19 @@
     }
   }
 
-  // Initialize as soon as DOM is ready
+  function initIntro() {
+    if (!window.__introInstance && document.getElementById('intro-overlay')) {
+      window.__introInstance = new IntroAnimationManager();
+    }
+  }
+
+  // Initialize as soon as DOM is ready or immediately if overlay element is already parsed
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      new IntroAnimationManager();
-    });
+    document.addEventListener('DOMContentLoaded', initIntro);
+    if (document.getElementById('intro-overlay')) {
+      initIntro();
+    }
   } else {
-    new IntroAnimationManager();
+    initIntro();
   }
 })();
