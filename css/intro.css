@@ -1,0 +1,958 @@
+/* ==========================================================================
+   AI Backend Engineer Intro Animation Styles
+   Monochrome, Minimal, High-Precision Cinematic Interface
+   Supports Dark and Light Modes with Seamless Theme Switching
+   ========================================================================== */
+
+/* Dark Theme (Default) */
+.intro-overlay,
+.intro-overlay.theme-dark {
+  --intro-bg: #050505;
+  --intro-surface: #0a0a0a;
+  --intro-text-primary: #F5F5F5;
+  --intro-text-secondary: #B0B0B0;
+  --intro-text-muted: #777777;
+  --intro-text-faint: #292929;
+  --intro-border: #292929;
+  --intro-border-subtle: #1c1c1c;
+  --intro-net-line: #292929;
+  --intro-net-line-faint: #181818;
+  --intro-net-node-bg: #141414;
+  --intro-net-node-border: #737373;
+  --intro-net-node-pulse: #F5F5F5;
+  --intro-net-flow: #555555;
+  --intro-net-flow-rev: #404040;
+  --intro-progress-track: #292929;
+  --intro-progress-fill: linear-gradient(90deg, #444444 0%, #A0A0A0 60%, #F5F5F5 100%);
+  --intro-glow: rgba(255, 255, 255, 0.08);
+  --intro-grid: rgba(255, 255, 255, 0.02);
+  --intro-vignette: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.65) 100%);
+  --intro-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: dark;
+}
+
+/* Light Theme */
+.intro-overlay.theme-light {
+  --intro-bg: #FAFAFA;
+  --intro-surface: #FFFFFF;
+  --intro-text-primary: #111111;
+  --intro-text-secondary: #444444;
+  --intro-text-muted: #777777;
+  --intro-text-faint: #CCCCCC;
+  --intro-border: #E0E0E0;
+  --intro-border-subtle: #EBEBEB;
+  --intro-net-line: #D0D0D0;
+  --intro-net-line-faint: #EAEAEA;
+  --intro-net-node-bg: #F0F0F0;
+  --intro-net-node-border: #888888;
+  --intro-net-node-pulse: #222222;
+  --intro-net-flow: #777777;
+  --intro-net-flow-rev: #999999;
+  --intro-progress-track: #E5E5E5;
+  --intro-progress-fill: linear-gradient(90deg, #888888 0%, #444444 60%, #111111 100%);
+  --intro-glow: rgba(0, 0, 0, 0.06);
+  --intro-grid: rgba(0, 0, 0, 0.035);
+  --intro-vignette: radial-gradient(circle at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.04) 100%);
+  --intro-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: light;
+}
+
+/* System Light Preference Media Query (Fallback before JS executes) */
+@media (prefers-color-scheme: light) {
+  .intro-overlay:not(.theme-dark) {
+    --intro-bg: #FAFAFA;
+    --intro-surface: #FFFFFF;
+    --intro-text-primary: #111111;
+    --intro-text-secondary: #444444;
+    --intro-text-muted: #777777;
+    --intro-text-faint: #CCCCCC;
+    --intro-border: #E0E0E0;
+    --intro-border-subtle: #EBEBEB;
+    --intro-net-line: #D0D0D0;
+    --intro-net-line-faint: #EAEAEA;
+    --intro-net-node-bg: #F0F0F0;
+    --intro-net-node-border: #888888;
+    --intro-net-node-pulse: #222222;
+    --intro-net-flow: #777777;
+    --intro-net-flow-rev: #999999;
+    --intro-progress-track: #E5E5E5;
+    --intro-progress-fill: linear-gradient(90deg, #888888 0%, #444444 60%, #111111 100%);
+    --intro-glow: rgba(0, 0, 0, 0.06);
+    --intro-grid: rgba(0, 0, 0, 0.035);
+    --intro-vignette: radial-gradient(circle at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.04) 100%);
+    color-scheme: light;
+  }
+}
+
+/* Base Fullscreen Overlay */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-color: var(--intro-bg);
+  color: var(--intro-text-primary);
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease-out, visibility 0.4s ease-out, background-color 0.3s ease, color 0.3s ease;
+  cursor: default;
+}
+
+.intro-overlay.intro-completed {
+  cursor: pointer !important;
+}
+
+.intro-overlay.intro-fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-overlay.intro-hidden {
+  display: none !important;
+}
+
+/* Subtle background grid pattern for technical depth */
+.intro-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, var(--intro-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--intro-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle vignette */
+.intro-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--intro-vignette);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Inner Container */
+.intro-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 36px;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   A. TOP HEADER
+   ========================================================================== */
+.intro-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--intro-border-subtle);
+}
+
+.intro-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.intro-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--intro-text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.intro-header-divider {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--intro-border) 0%, var(--intro-border-subtle) 50%, var(--intro-border) 100%);
+}
+
+.intro-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--intro-text-muted);
+  white-space: nowrap;
+}
+
+.intro-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--intro-text-secondary);
+  box-shadow: 0 0 6px var(--intro-glow);
+  animation: introBlink 1.4s infinite ease-in-out;
+}
+
+.intro-overlay.intro-completed .intro-status-dot {
+  background-color: var(--intro-text-primary);
+  animation: none;
+}
+
+@keyframes introBlink {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* ==========================================================================
+   B. MAIN CONTENT
+   ========================================================================== */
+.intro-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 48px;
+  padding: 24px 0;
+  min-height: 0;
+}
+
+.intro-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 36px;
+  max-width: 680px;
+}
+
+/* 3-Line Persistent Statement */
+.intro-statements {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.intro-statement {
+  margin: 0;
+  font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(2rem, 3.8vw, 3.4rem);
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(6px);
+  transition: opacity 0.75s var(--intro-ease-out-expo),
+              transform 0.75s var(--intro-ease-out-expo),
+              filter 0.75s var(--intro-ease-out-expo);
+  will-change: transform, opacity, filter;
+}
+
+.intro-statement.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.intro-word-primary {
+  color: var(--intro-text-primary);
+}
+
+.intro-word-emphasis {
+  color: var(--intro-text-secondary);
+  font-weight: 600;
+}
+
+/* System Status Diagnostics */
+.intro-system-status {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  padding-top: 16px;
+  border-top: 1px solid var(--intro-border-subtle);
+  max-width: 540px;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--intro-text-muted);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out, color 0.3s ease;
+}
+
+.status-row.is-active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.status-tag {
+  color: var(--intro-text-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.status-name {
+  color: var(--intro-text-secondary);
+  flex-shrink: 0;
+  font-size: 11px;
+}
+
+.status-dots {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--intro-text-faint);
+  opacity: 0.6;
+}
+
+.status-state {
+  color: var(--intro-text-muted);
+  text-transform: lowercase;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+
+.status-row.is-active .status-state {
+  color: var(--intro-text-primary);
+}
+
+/* ==========================================================================
+   AI NETWORK VISUALIZATION (Monochrome, SVG & CSS)
+   ========================================================================== */
+.intro-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.intro-network-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intro-network-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 20px var(--intro-glow));
+}
+
+/* Rotating Orbits */
+.orbit-rotate-clockwise {
+  transform-origin: 250px 250px;
+  animation: netOrbitClockwise 28s linear infinite;
+}
+
+.orbit-rotate-counter {
+  transform-origin: 250px 250px;
+  animation: netOrbitCounter 36s linear infinite;
+}
+
+.orbit-rotate-slow {
+  transform-origin: 250px 250px;
+  animation: netOrbitClockwise 48s linear infinite;
+}
+
+@keyframes netOrbitClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes netOrbitCounter {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* Flowing Dashed Lines */
+.network-flow-line {
+  stroke: var(--intro-net-flow);
+  stroke-width: 1.2;
+  stroke-dasharray: 6 8;
+  animation: netDashFlow 3.2s linear infinite;
+}
+
+.network-flow-line-reverse {
+  stroke: var(--intro-net-flow-rev);
+  stroke-width: 1;
+  stroke-dasharray: 5 7;
+  animation: netDashFlowReverse 3.6s linear infinite;
+}
+
+@keyframes netDashFlow {
+  from { stroke-dashoffset: 28; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes netDashFlowReverse {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 24; }
+}
+
+/* Pulsing Nodes */
+.node-pulse-1 {
+  animation: netNodePulse 2.4s ease-in-out infinite;
+}
+.node-pulse-2 {
+  animation: netNodePulse 3s ease-in-out 0.8s infinite;
+}
+.node-pulse-3 {
+  animation: netNodePulse 2.8s ease-in-out 1.6s infinite;
+}
+
+@keyframes netNodePulse {
+  0%, 100% {
+    r: 3.5;
+    fill-opacity: 0.5;
+    stroke-opacity: 0.3;
+  }
+  50% {
+    r: 5.5;
+    fill-opacity: 1;
+    stroke-opacity: 0.8;
+  }
+}
+
+/* Center Core Glow */
+.center-core {
+  animation: netCorePulse 2.5s ease-in-out infinite;
+  transform-origin: 250px 250px;
+}
+
+@keyframes netCorePulse {
+  0%, 100% {
+    transform: scale(0.96);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+/* SVG Element Theme Bindings */
+.net-ref-ring {
+  stroke: var(--intro-net-line-faint);
+  stroke-width: 1;
+  fill: none;
+}
+
+.net-grid-line {
+  stroke: var(--intro-net-line-faint);
+  stroke-width: 1;
+}
+
+.net-orbit-ellipse {
+  stroke: var(--intro-net-line);
+  stroke-width: 1;
+  fill: none;
+}
+
+.net-orbit-ellipse-faint {
+  stroke: var(--intro-net-line-faint);
+  stroke-width: 1;
+  fill: none;
+}
+
+.net-orbit-dashed {
+  stroke: var(--intro-net-line);
+  stroke-width: 1;
+  fill: none;
+}
+
+.net-orbit-node {
+  fill: var(--intro-text-secondary);
+}
+
+.net-orbit-node-muted {
+  fill: var(--intro-text-muted);
+}
+
+.net-interconnect {
+  stroke: var(--intro-net-line);
+  stroke-width: 1;
+}
+
+.net-node-outer {
+  fill: var(--intro-net-node-bg);
+  stroke: var(--intro-net-node-border);
+  stroke-width: 1.5;
+}
+
+.net-node-outer-accent {
+  fill: var(--intro-net-node-bg);
+  stroke: var(--intro-text-secondary);
+  stroke-width: 1.5;
+}
+
+.net-node-pulse {
+  fill: var(--intro-net-node-pulse);
+  stroke: var(--intro-glow);
+  stroke-width: 2;
+}
+
+.net-node-pulse-mid {
+  fill: var(--intro-text-secondary);
+  stroke: var(--intro-glow);
+  stroke-width: 2;
+}
+
+.net-core-aura {
+  fill: var(--intro-glow);
+  stroke: var(--intro-border);
+  stroke-width: 1;
+}
+
+.net-core-shell {
+  fill: var(--intro-surface);
+  stroke: var(--intro-text-secondary);
+  stroke-width: 1.5;
+}
+
+.net-core-nucleus {
+  fill: var(--intro-text-primary);
+}
+
+/* ==========================================================================
+   C. PROGRESS BAR & D. FOOTER
+   ========================================================================== */
+.intro-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding-top: 16px;
+  border-top: 1px solid var(--intro-border-subtle);
+}
+
+.intro-progress-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.intro-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--intro-text-muted);
+}
+
+#intro-progress-num {
+  color: var(--intro-text-primary);
+  font-weight: 600;
+}
+
+.intro-progress-track {
+  width: 100%;
+  height: 2px;
+  background-color: var(--intro-progress-track);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.intro-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--intro-progress-fill);
+  box-shadow: 0 0 10px var(--intro-glow);
+  transition: width 0.05s linear;
+  will-change: width;
+}
+
+.intro-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.intro-footer-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--intro-text-muted);
+  transition: color 0.3s ease;
+}
+
+.intro-overlay.intro-completed .intro-footer-label {
+  color: var(--intro-text-secondary);
+}
+
+/* Enter Instruction Prompt */
+.intro-enter-prompt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 18px;
+  min-height: 44px;
+  background-color: var(--intro-surface);
+  border: 1px solid var(--intro-border);
+  border-radius: 9999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--intro-text-primary);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out, border-color 0.25s ease, background-color 0.25s ease;
+  box-shadow: 0 4px 16px var(--intro-glow);
+}
+
+.intro-enter-icon {
+  font-size: 13px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.intro-overlay.intro-completed .intro-enter-prompt {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  animation: introPromptPulse 2.6s ease-in-out infinite;
+}
+
+.intro-overlay.intro-completed:hover .intro-enter-prompt {
+  border-color: var(--intro-text-primary);
+}
+
+.intro-overlay.intro-completed:hover .intro-enter-icon {
+  transform: translate(2px, -2px);
+}
+
+@keyframes introPromptPulse {
+  0%, 100% {
+    border-color: var(--intro-border);
+    box-shadow: 0 4px 12px var(--intro-glow);
+  }
+  50% {
+    border-color: var(--intro-text-secondary);
+    box-shadow: 0 4px 20px var(--intro-glow);
+  }
+}
+
+/* Skip Button */
+.intro-skip-btn {
+  background: transparent;
+  border: 1px solid var(--intro-border);
+  color: var(--intro-text-secondary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease, opacity 0.3s ease;
+}
+
+.intro-skip-btn:hover {
+  background-color: var(--intro-surface);
+  border-color: var(--intro-text-muted);
+  color: var(--intro-text-primary);
+}
+
+.intro-skip-btn:focus-visible {
+  outline: 2px solid var(--intro-text-primary);
+  outline-offset: 2px;
+  border-color: var(--intro-text-primary);
+}
+
+.intro-skip-btn:active {
+  transform: scale(0.97);
+}
+
+.intro-overlay.intro-completed .intro-skip-btn {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (Tablets & Mobile)
+   ========================================================================== */
+
+/* Tablets (768px - 1023px) */
+@media (max-width: 1023px) {
+  .intro-container {
+    padding: 24px 28px;
+  }
+
+  .intro-main {
+    grid-template-columns: 1fr 0.9fr;
+    gap: 32px;
+  }
+
+  .intro-statement {
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  }
+
+  .intro-network-wrapper {
+    max-width: 340px;
+  }
+
+  .intro-system-status {
+    font-size: 11px;
+    gap: 6px;
+  }
+}
+
+/* Mobile Phones (320px - 767px) */
+@media (max-width: 767px) {
+  .intro-container {
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)) 16px;
+    gap: 16px;
+  }
+
+  .intro-header {
+    padding-bottom: 12px;
+    gap: 12px;
+  }
+
+  .intro-title {
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+  }
+
+  .intro-status-badge {
+    font-size: 9.5px;
+  }
+
+  .intro-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 18px;
+    padding: 8px 0;
+  }
+
+  .intro-left {
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  .intro-statements {
+    gap: 8px;
+  }
+
+  .intro-statement {
+    font-size: clamp(1.45rem, 6.2vw, 2.05rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  /* Compact Network on Mobile */
+  .intro-right {
+    position: relative;
+    height: auto;
+    max-height: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.65;
+  }
+
+  .intro-network-wrapper {
+    max-width: 130px;
+    max-height: 130px;
+  }
+
+  .intro-system-status {
+    padding-top: 10px;
+    gap: 5px;
+    font-size: 10px;
+  }
+
+  .status-row {
+    gap: 6px;
+  }
+
+  .status-name {
+    font-size: 9.5px;
+  }
+
+  .status-dots {
+    display: none; /* Hide dots on narrow screens to avoid wrapping */
+  }
+
+  .status-state {
+    font-size: 9.5px;
+    margin-left: auto;
+  }
+
+  .intro-bottom {
+    padding-top: 10px;
+    gap: 12px;
+  }
+
+  .intro-footer {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .intro-enter-prompt {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .intro-footer-label {
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+  }
+
+  .intro-skip-btn {
+    padding: 6px 14px;
+    font-size: 10px;
+    min-height: 44px;
+    width: 100%;
+  }
+}
+
+/* Extra Narrow Mobile (320px - 360px) */
+@media (max-width: 360px) {
+  .intro-statement {
+    font-size: 1.35rem;
+  }
+
+  .intro-right {
+    display: none; /* Hide network on extremely small screens to maintain pristine readability */
+  }
+
+  .intro-title {
+    font-size: 8.5px;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* Mobile Landscape Orientation */
+@media (max-height: 520px) and (orientation: landscape) {
+  .intro-container {
+    padding: 10px 20px;
+  }
+
+  .intro-header {
+    padding-bottom: 6px;
+  }
+
+  .intro-main {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 16px;
+    padding: 4px 0;
+  }
+
+  .intro-left {
+    gap: 8px;
+  }
+
+  .intro-statement {
+    font-size: 1.25rem;
+    line-height: 1.1;
+  }
+
+  .intro-network-wrapper {
+    max-width: 140px;
+    max-height: 140px;
+  }
+
+  .intro-system-status {
+    padding-top: 6px;
+    gap: 4px;
+    font-size: 9.5px;
+  }
+
+  .intro-bottom {
+    padding-top: 6px;
+    gap: 6px;
+  }
+
+  .intro-skip-btn {
+    min-height: 36px;
+    padding: 4px 10px;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION SUPPORT
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .intro-statement {
+    transition: opacity 0.2s ease !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  .status-row {
+    transition: opacity 0.2s ease !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .orbit-rotate-clockwise,
+  .orbit-rotate-counter,
+  .orbit-rotate-slow,
+  .network-flow-line,
+  .network-flow-line-reverse,
+  .node-pulse-1,
+  .node-pulse-2,
+  .node-pulse-3,
+  .center-core,
+  .intro-status-dot,
+  .intro-enter-prompt {
+    animation: none !important;
+  }
+
+  .intro-progress-fill {
+    transition: none !important;
+  }
+}

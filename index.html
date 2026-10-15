@@ -133,10 +133,186 @@
 
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/intro.css">
 </head>
 
 <body
   class="bg-background dark:bg-surface-dark text-on-background dark:text-on-surface antialiased selection:bg-primary selection:text-on-primary">
+
+  <!-- ================================================================= -->
+  <!-- AI Backend Engineer Cinematic Intro Screen (Monochrome) -->
+  <!-- ================================================================= -->
+  <div id="intro-overlay" class="intro-overlay" role="dialog" aria-modal="true" aria-label="Portfolio Introduction Screen">
+    <div class="intro-container">
+      <!-- Top Header -->
+      <header class="intro-header">
+        <div class="intro-brand">
+          <span class="intro-title">SHAZAMAL SAIF / AI ENGINEER</span>
+        </div>
+        <div class="intro-header-divider"></div>
+        <div class="intro-status-badge">
+          <span class="intro-status-dot"></span>
+          <span class="intro-status-text">&gt; initializing...</span>
+        </div>
+      </header>
+
+      <!-- Main Content: Two Columns on Desktop, Vertical on Mobile -->
+      <main class="intro-main">
+        <!-- Left Side: Sequential Persistent Headlines & System Status -->
+        <div class="intro-left">
+          <div class="intro-statements" aria-live="polite">
+            <h1 id="intro-line-1" class="intro-statement">
+              <span class="intro-word-primary">Engineering</span> <span class="intro-word-emphasis">intelligence.</span>
+            </h1>
+            <h1 id="intro-line-2" class="intro-statement">
+              <span class="intro-word-primary">Building</span> <span class="intro-word-emphasis">reliability.</span>
+            </h1>
+            <h1 id="intro-line-3" class="intro-statement">
+              <span class="intro-word-primary">Designed to</span> <span class="intro-word-emphasis">scale.</span>
+            </h1>
+          </div>
+
+          <!-- System Status Diagnostics -->
+          <div class="intro-system-status" aria-label="System diagnostic checks">
+            <div class="status-row" data-row="0">
+              <span class="status-tag">[OK]</span>
+              <span class="status-name">AI SYSTEMS</span>
+              <span class="status-dots">................................</span>
+              <span class="status-state">ready</span>
+            </div>
+            <div class="status-row" data-row="1">
+              <span class="status-tag">[OK]</span>
+              <span class="status-name">RETRIEVAL PIPELINES</span>
+              <span class="status-dots">.......................</span>
+              <span class="status-state">ready</span>
+            </div>
+            <div class="status-row" data-row="2">
+              <span class="status-tag">[OK]</span>
+              <span class="status-name">BACKEND SERVICES</span>
+              <span class="status-dots">..........................</span>
+              <span class="status-state">ready</span>
+            </div>
+            <div class="status-row" data-row="3">
+              <span class="status-tag">[OK]</span>
+              <span class="status-name">DEPLOYMENT ENVIRONMENT</span>
+              <span class="status-dots">....................</span>
+              <span class="status-state">ready</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Animated AI System Network (Monochrome SVG) -->
+        <div class="intro-right" aria-hidden="true">
+          <div class="intro-network-wrapper">
+            <svg class="intro-network-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Concentric Reference Rings -->
+              <circle class="net-ref-ring" cx="250" cy="250" r="220" stroke-dasharray="3 6" />
+              <circle class="net-ref-ring" cx="250" cy="250" r="160" />
+              <circle class="net-ref-ring" cx="250" cy="250" r="100" stroke-dasharray="2 4" />
+              <circle class="net-ref-ring" cx="250" cy="250" r="50" />
+
+              <!-- Crosshairs / Radar Grids -->
+              <line class="net-grid-line" x1="250" y1="20" x2="250" y2="480" stroke-dasharray="4 6" />
+              <line class="net-grid-line" x1="20" y1="250" x2="480" y2="250" stroke-dasharray="4 6" />
+
+              <!-- Rotating Orbital Ellipses -->
+              <g class="orbit-rotate-clockwise">
+                <ellipse class="net-orbit-ellipse" cx="250" cy="250" rx="180" ry="95" transform="rotate(25 250 250)" />
+                <circle class="net-orbit-node" cx="390" cy="200" r="3" />
+                <circle class="net-orbit-node-muted" cx="110" cy="300" r="2.5" />
+              </g>
+
+              <g class="orbit-rotate-counter">
+                <ellipse class="net-orbit-ellipse-faint" cx="250" cy="250" rx="205" ry="115" transform="rotate(-35 250 250)" />
+                <circle class="net-orbit-node" cx="250" cy="45" r="3" />
+                <circle class="net-orbit-node-muted" cx="250" cy="455" r="3" />
+              </g>
+
+              <g class="orbit-rotate-slow">
+                <ellipse class="net-orbit-dashed" cx="250" cy="250" rx="140" ry="140" stroke-dasharray="8 12" />
+              </g>
+
+              <!-- Animated Movement Flow Paths -->
+              <path class="network-flow-line" d="M 120 250 Q 180 120, 250 120 T 380 250 T 250 380 T 120 250" fill="none" />
+              <path class="network-flow-line-reverse" d="M 250 160 C 320 160, 360 210, 360 250 C 360 310, 300 340, 250 340 C 180 340, 140 290, 140 250 C 140 190, 200 160, 250 160 Z" fill="none" />
+
+              <!-- Network Interconnect Lines -->
+              <g class="net-interconnect">
+                <line x1="250" y1="250" x2="175" y2="185" />
+                <line x1="250" y1="250" x2="325" y2="185" />
+                <line x1="250" y1="250" x2="165" y2="305" />
+                <line x1="250" y1="250" x2="335" y2="305" />
+                <line x1="250" y1="250" x2="250" y2="120" />
+                <line x1="250" y1="250" x2="250" y2="380" />
+                <line x1="175" y1="185" x2="250" y2="120" />
+                <line x1="325" y1="185" x2="250" y2="120" />
+                <line x1="165" y1="305" x2="250" y2="380" />
+                <line x1="335" y1="305" x2="250" y2="380" />
+                <line x1="175" y1="185" x2="110" y2="245" />
+                <line x1="165" y1="305" x2="110" y2="245" />
+                <line x1="325" y1="185" x2="390" y2="245" />
+                <line x1="335" y1="305" x2="390" y2="245" />
+                <line x1="175" y1="185" x2="325" y2="185" stroke-dasharray="3 3" />
+                <line x1="165" y1="305" x2="335" y2="305" stroke-dasharray="3 3" />
+              </g>
+
+              <!-- Network Nodes -->
+              <!-- Outer Nodes -->
+              <g>
+                <circle class="net-node-outer" cx="110" cy="245" r="4" />
+                <circle class="net-node-outer" cx="390" cy="245" r="4" />
+                <circle class="net-node-outer-accent" cx="250" cy="120" r="4.5" />
+                <circle class="net-node-outer-accent" cx="250" cy="380" r="4.5" />
+              </g>
+
+              <!-- Intermediate Pulsing Nodes -->
+              <g>
+                <circle class="node-pulse-1 net-node-pulse" cx="175" cy="185" r="4" />
+                <circle class="node-pulse-2 net-node-pulse-mid" cx="325" cy="185" r="4" />
+                <circle class="node-pulse-3 net-node-pulse-mid" cx="165" cy="305" r="4" />
+                <circle class="node-pulse-1 net-node-pulse" cx="335" cy="305" r="4" />
+              </g>
+
+              <!-- Central AI Engine Core -->
+              <g class="center-core">
+                <circle class="net-core-aura" cx="250" cy="250" r="28" />
+                <circle class="net-core-shell" cx="250" cy="250" r="18" />
+                <circle class="net-core-nucleus" cx="250" cy="250" r="6" />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Progress Bar & Footer -->
+      <div class="intro-bottom">
+        <div class="intro-progress-wrapper">
+          <div class="intro-progress-labels">
+            <span>0%</span>
+            <span id="intro-progress-num">0%</span>
+            <span>100%</span>
+          </div>
+          <div class="intro-progress-track">
+            <div id="intro-progress-bar" class="intro-progress-fill"></div>
+          </div>
+        </div>
+
+        <footer class="intro-footer">
+          <span id="intro-footer-status-label" class="intro-footer-label">INITIALIZING PORTFOLIO.EXE</span>
+
+          <!-- Enter instruction prompt that appears upon animation completion -->
+          <div id="intro-enter-prompt" class="intro-enter-prompt" aria-live="polite">
+            <span id="intro-enter-text" class="intro-enter-text">Click anywhere to enter</span>
+            <span class="intro-enter-icon">↗</span>
+          </div>
+
+          <button id="intro-skip-btn" class="intro-skip-btn" type="button" aria-label="Skip intro animation">
+            <span>Skip intro →</span>
+          </button>
+        </footer>
+      </div>
+    </div>
+  </div>
 
   <!-- Accessible Skip Link -->
   <a href="#hero" class="skip-link">Skip to main content</a>
@@ -1230,6 +1406,7 @@
   <script src="js/api.js?v=1.1"></script>
   <script src="js/chat.js?v=1.1"></script>
   <script src="js/contact.js?v=1.1"></script>
+  <script src="js/intro.js?v=1.0"></script>
   <script src="js/main.js?v=1.1"></script>
 </body>
 
